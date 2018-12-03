@@ -80,7 +80,7 @@ function enableRequiredForm(){
 }
 
 function convertArrayOfObjectsToCSV(args) {  
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+    let result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
     data = args.data || null;
     if (data == null || !data.length) {
@@ -111,8 +111,8 @@ function convertArrayOfObjectsToCSV(args) {
 }
 
 function downloadCSV(args) {  
-    var data, filename, link;
-    var csv = convertArrayOfObjectsToCSV({
+    let data, filename, link;
+    let csv = convertArrayOfObjectsToCSV({
         data: trackingData
     });
     if (csv == null) return;
@@ -135,18 +135,24 @@ function getCurrentTimeInString(){
 }
 
 function addToTrackingData(emotion, time){
-    var obj = {
+    let obj = {
         PartID: "",
         CourseID: "",
         Emotion: "",
         Date: "",
-        TimeStamp: ""
+        TimeStamp: "",
+        Notes: "",
     };
     obj.PartID = partID;
     obj.CourseID = courseID;
     obj.Emotion = emotion;
-    obj.Date = time;
+    let datetimearray = time.split(",");
+    obj.Date = datetimearray[0];
+    obj.TimeStamp = datetimearray[1];
+    let txtAreaNotes = document.getElementById("notes").value.replace(/,/g, " ");
+    obj.Notes = txtAreaNotes;
     trackingData.push(obj);
+    document.getElementById("notes").value = "";
 }
 
 function showModal(){
