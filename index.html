@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EMA</title>
+</head>
+
+
+<body>
+    <div class="toptext jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-5">Emotion Self-Report</h1>
+                <p class="lead">Thank you for participating in our study! <br> 
+                Please enter your course number and the participant ID assigned to you before you begin. 
+                <br>
+                Please press start when the class started. To record your emotion, you can click on the button that best represent the emotions you are feeling at the time. Please press stop when the class ended. Then press download to export recorded data in csv.
+                </p>
+            </div>
+    </div>
+
+
+
+    <div id="centerStuff" class="container container-fluid ">
+        <form class="justify-content-center">
+            <div class="form-group">
+                <label for="partID">Participant ID</label>
+                <input type="text" class="form-control" id="partID" placeholder="enter your participant id here">
+            </div>
+            <div class="form-group">
+                <label for="courseID">Course Number</label>
+                <input type="text" class="form-control" id="courseID" placeholder="enter course number here">
+            </div>
+        </form>
+        <div id="controlButtons"class="d-flex justify-content-center flex-wrap">
+            <button id="btnStart" name="Start" type="button" class="btn btn-outline-success m-1">Start</button>
+            <button id="btnStop" name="Stop" type="button" class="btn btn-outline-danger m-1">Stop</button>
+            <!-- <button id="btnReset" type="button" class="btn btn-outline-warning m-1">Reset</button> -->
+            <button id="btnDownload" type="button" class="btn btn-outline-info m-1">Download</button>
+        </div>
+
+        <div id="emotionButtons"class="d-flex justify-content-center flex-wrap">
+            <button name="Bored"id="btnBore" type="button" class="btn btn-outline-dark btn-lg custBtn">Bored</button>
+            <button name="Engaged and Concentrated" id="btnEnCo" type="button" class="btn btn-outline-dark btn-lg custBtn">Engaged <br> & <br> Concentrated</button>
+            <button name="Frustrated" id="btnFrus" type="button" class="btn btn-outline-dark btn-lg custBtn">Frustrated</button>
+            <button name="Delight" id="btnDeli" type="button" class="btn btn-outline-dark btn-lg custBtn">Delight</button>
+            <button name="Confused" id="btnConf" type="button" class="btn btn-outline-dark btn-lg custBtn">Confused</button>
+            <button name="Surprised" id="btnSupr" type="button" class="btn btn-outline-dark btn-lg custBtn">Surprised</button>
+            <button name="Neutral" id="btnNeut" type="button" class="btn btn-outline-dark btn-lg custBtn">Neutral</button>
+        </div>
+    </div>
+
+    <div class="botspacer my-5">
+
+    </div>
+
+    <div class="modal fade" id="requiredModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Enter Required Fields</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                Participant ID and Course ID are required to continue
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="index.js"></script>
+</html>
