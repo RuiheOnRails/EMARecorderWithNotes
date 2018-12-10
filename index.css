@@ -4,8 +4,6 @@
     min-height: 13rem;
 }
 
-
-
 @media(max-width: 780px){
     .custBtn {
         margin: 0.25rem;

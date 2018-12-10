@@ -9,20 +9,16 @@
     <title>EMA</title>
 </head>
 
-
 <body>
     <div class="toptext jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-5">Emotion Self-Report</h1>
-                <p class="lead">Thank you for participating in our study! <br> 
-                Please enter your course number and the participant ID assigned to you before you begin. 
-                <br>
-                Please press start when the class started. To record your emotion, you can click on the button that best represent the emotions you are feeling at the time. Please press stop when the class ended. Then press download to export recorded data in csv.
-                </p>
-            </div>
+        <div class="container">
+            <h1 class="display-5">Emotion Self-Report</h1>
+            Please enter your course number and the participant ID assigned to you before you begin. 
+            <br>
+            pressing submit will record each selected radio button into a csv, press download to export session data.
+            </p>
+        </div>
     </div>
-
-
 
     <div id="centerStuff" class="container container-fluid ">
         <form class="justify-content-center">
@@ -34,30 +30,145 @@
                 <label for="courseID">Course Number</label>
                 <input type="text" class="form-control" id="courseID" placeholder="enter course number here">
             </div>
-            <div class="form-group">
-                <label for="notes" class="col-form-label">Notes:</label>
-                <textarea class="form-control" id="notes" placeholder="enter notes before clicking on button"></textarea>
-            </div>
         </form>
         <div id="controlButtons"class="d-flex justify-content-center flex-wrap">
             <button id="btnStart" name="Start" type="button" class="btn btn-outline-success m-1">Start</button>
             <button id="btnStop" name="Stop" type="button" class="btn btn-outline-danger m-1">Stop</button>
-            <!-- <button id="btnReset" type="button" class="btn btn-outline-warning m-1">Reset</button> -->
             <button id="btnDownload" type="button" class="btn btn-outline-info m-1">Download</button>
         </div>
 
-        <div id="emotionButtons"class="d-flex justify-content-center flex-wrap">
-            <button name="Bored"id="btnBore" type="button" class="btn btn-outline-dark btn-lg custBtn">Bored</button>
-            <button name="Engaged and Concentrated" id="btnEnCo" type="button" class="btn btn-outline-dark btn-lg custBtn">Engaged <br> & <br> Concentrated</button>
-            <button name="Frustrated" id="btnFrus" type="button" class="btn btn-outline-dark btn-lg custBtn">Frustrated</button>
-            <button name="Delight" id="btnDeli" type="button" class="btn btn-outline-dark btn-lg custBtn">Delight</button>
-            <button name="Confused" id="btnConf" type="button" class="btn btn-outline-dark btn-lg custBtn">Confused</button>
-            <button name="Surprised" id="btnSupr" type="button" class="btn btn-outline-dark btn-lg custBtn">Surprised</button>
-            <button name="Neutral" id="btnNeut" type="button" class="btn btn-outline-dark btn-lg custBtn">Neutral</button>
+        <form id="classActForm">
+            <legend> Class activity</legend>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="classActivityRadios" id="radDiscussion" value="Discussion" checked>
+                <label class="form-check-label" for="radDiscussion">
+                    Discussion
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="classActivityRadios" id="radLecture" value="Lecture" >
+                <label class="form-check-label" for="radLecture">
+                    Lecture
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="classActivityRadios" id="radPair" value="Paired or Group Activity">
+                <label class="form-check-label" for="radPair">
+                    Paired or Group Activity
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="classActivityRadios" id="radSolo" value="Individual work">
+                <label class="form-check-label" for="radSolo">
+                    Individual work
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="classActivityRadios" id="radQA" value="Q&A">
+                <label class="form-check-label" for="radQA">
+                    Q & A
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input tagOther" type="radio" name="classActivityRadios" id="radClassOther" value="otherClassAct" tag="other">
+                <label class="form-check-label" for="radClassOther">
+                    Other
+                </label>
+                <input class="form-control ml-2" type="text" id="otherClassAct">
+            </div>
+        </form>
+
+        <form id="studentForm">
+            <legend> Student's specific behavior</legend>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="studentBehaviorRadios" id="radTyping" value="Typing/Writing Notes" checked>
+                <label class="form-check-label" for="radTyping">
+                    Typing/Writing Notes
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="studentBehaviorRadios" id="radPhone" value="Checking phone">
+                <label class="form-check-label" for="radPhone">
+                    Checking phone
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="studentBehaviorRadios" id="radComputer" value="Using Computer">
+                <label class="form-check-label" for="radComputer">
+                    Using Computer
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input tagOther" type="radio" name="studentBehaviorRadios" id="radBehaviorOther" value="otherStudentBehavior" tag="other">
+                <label class="form-check-label" for="radBehaviorOther">
+                    Other
+                </label>
+                <input class="form-control ml-2" type="text" id="otherStudentBehavior">
+            </div>
+        </form>
+
+        <div class="form-group">
+            <legend>Other observation</legend>
+            <textarea class="form-control" id="notes" placeholder="note down other observations here"></textarea>
         </div>
+
+        <form id=cogStateForm>
+            <legend>Cognitive-affective state</legend>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radBored" value="Bored" checked>
+                <label class="form-check-label" for="radBored">
+                    Bored
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radEng" value="Engaged & Concentrating">
+                <label class="form-check-label" for="radEng">
+                    Engaged & Concentrating
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radFrus" value="Frustrated">
+                <label class="form-check-label" for="radFrus">
+                    Frustrated
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radDeli" value="Delighted">
+                <label class="form-check-label" for="radDeli">
+                    Delighted
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radConf" value="Confused">
+                <label class="form-check-label" for="radConf">
+                    Confused
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radSup" value="Surprised">
+                <label class="form-check-label" for="radSup">
+                    Surprised
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radNeutral" value="Neutral">
+                <label class="form-check-label" for="radNeutral">
+                    Neutral
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input tagOther" type="radio" name="cogAffStateRadios" id="radOtherCogState" value="otherCogState" tag="other">
+                <label class="form-check-label" for="radOtherCogState">
+                    Other
+                </label>
+                <input class="form-control ml-2" type="text" id="otherCogState">
+            </div>
+        </form>
+
+        <button type="button" class="btn btn-primary btn-block mt-3" id="btnSubmit">Submit</button>
     </div>
 
-    <div class="botspacer my-5">
+    <div class="botspacer my-3">
 
     </div>
 
