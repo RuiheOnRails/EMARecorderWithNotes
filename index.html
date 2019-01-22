@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="index.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <head>
     <meta charset="UTF-8">
@@ -23,12 +22,12 @@
     <div id="centerStuff" class="container container-fluid ">
         <form class="justify-content-center">
             <div class="form-group">
-                <label for="partID">Participant ID</label>
-                <input type="text" class="form-control" id="partID" placeholder="enter your participant id here">
+                <label for="observerName">Observer Name</label>
+                <input type="text" class="form-control" id="observerName" placeholder="enter your name here">
             </div>
             <div class="form-group">
-                <label for="courseID">Course Number</label>
-                <input type="text" class="form-control" id="courseID" placeholder="enter course number here">
+                <label for="courseID">Course ID</label>
+                <input type="text" class="form-control" id="courseID" placeholder="enter course ID here">
             </div>
         </form>
         <div id="controlButtons"class="d-flex justify-content-center flex-wrap">
@@ -37,131 +36,82 @@
             <button id="btnDownload" type="button" class="btn btn-outline-info m-1">Download</button>
         </div>
 
+        <form id='observingForm'>
+            <legend>Observing</legend>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="obserRadios" id="radAll" value="All" checked>
+                <label class="form-check-label" for="radAll">
+                    All
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="obserRadios" id="radP1" value="P1" >
+                <label class="form-check-label" for="radP1">
+                    P1
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="obserRadios" id="radP2" value="P2">
+                <label class="form-check-label" for="radP2">
+                    P2
+                </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="radio" name="obserRadios" id="radP3" value="P3">
+                <label class="form-check-label" for="radP3">
+                    P3
+                </label>
+            </div>
+        </form>
+
         <form id="classActForm">
             <legend> Class activity</legend>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="classActivityRadios" id="radDiscussion" value="Discussion" checked>
-                <label class="form-check-label" for="radDiscussion">
-                    Discussion
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="classActivityRadios" id="radLecture" value="Lecture" >
-                <label class="form-check-label" for="radLecture">
-                    Lecture
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="classActivityRadios" id="radPair" value="Paired or Group Activity">
-                <label class="form-check-label" for="radPair">
-                    Paired or Group Activity
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="classActivityRadios" id="radSolo" value="Individual work">
-                <label class="form-check-label" for="radSolo">
-                    Individual work
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="classActivityRadios" id="radQA" value="Q&A">
-                <label class="form-check-label" for="radQA">
-                    Q & A
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input tagOther" type="radio" name="classActivityRadios" id="radClassOther" value="otherClassAct" tag="other">
-                <label class="form-check-label" for="radClassOther">
-                    Other
-                </label>
-                <input class="form-control ml-2" type="text" id="otherClassAct">
+            <select class="form-control" id="classActSelector">             
+                <option value="Discussion">Discussion</option>
+                <option value="Individual">Individual</option>
+                <option value="Lecture">Lecture</option>
+                <option value="Paired or Group Activity">Paired or Group Activity</option>
+                <option value="Q & A">Q & A</option>
+                <option value="otherClassActText">Other</option>
+            </select>
+
+            <div class="form-group mt-2 ">
+                <textarea class="form-control d-none" id="otherClassActText" placeholder="other class activity" ></textarea>
             </div>
         </form>
 
         <form id="studentForm">
-            <legend> Student's specific behavior</legend>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="studentBehaviorRadios" id="radTyping" value="Typing/Writing Notes" checked>
-                <label class="form-check-label" for="radTyping">
-                    Typing/Writing Notes
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="studentBehaviorRadios" id="radPhone" value="Checking phone">
-                <label class="form-check-label" for="radPhone">
-                    Checking phone
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="studentBehaviorRadios" id="radComputer" value="Using Computer">
-                <label class="form-check-label" for="radComputer">
-                    Using Computer
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input tagOther" type="radio" name="studentBehaviorRadios" id="radBehaviorOther" value="otherStudentBehavior" tag="other">
-                <label class="form-check-label" for="radBehaviorOther">
-                    Other
-                </label>
-                <input class="form-control ml-2" type="text" id="otherStudentBehavior">
+            <legend>Students' specific behavior</legend>
+            <select class="form-control" id="studentActSelector">
+                <option value="Checking phone">Checking phone</option>
+                <option value="Listening">Listening</option>
+                <option value="Reading Notes">Reading Notes</option>
+                <option value="Typing/Writing Notes">Typing/Writing Notes</option>
+                <option value="otherBehText">Other</option>
+            </select>
+
+            <div class="form-group mt-2">
+                <textarea class="form-control d-none" id="otherBehText" placeholder="other behavior" ></textarea>
             </div>
         </form>
 
-        <div class="form-group">
-            <legend>Other observation</legend>
-            <textarea class="form-control" id="notes" placeholder="note down other observations here"></textarea>
-        </div>
-
         <form id=cogStateForm>
             <legend>Cognitive-affective state</legend>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radBored" value="Bored" checked>
-                <label class="form-check-label" for="radBored">
-                    Bored
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radEng" value="Engaged & Concentrating">
-                <label class="form-check-label" for="radEng">
-                    Engaged & Concentrating
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radFrus" value="Frustrated">
-                <label class="form-check-label" for="radFrus">
-                    Frustrated
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radDeli" value="Delighted">
-                <label class="form-check-label" for="radDeli">
-                    Delighted
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radConf" value="Confused">
-                <label class="form-check-label" for="radConf">
-                    Confused
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radSup" value="Surprised">
-                <label class="form-check-label" for="radSup">
-                    Surprised
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="cogAffStateRadios" id="radNeutral" value="Neutral">
-                <label class="form-check-label" for="radNeutral">
-                    Neutral
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input tagOther" type="radio" name="cogAffStateRadios" id="radOtherCogState" value="otherCogState" tag="other">
-                <label class="form-check-label" for="radOtherCogState">
-                    Other
-                </label>
-                <input class="form-control ml-2" type="text" id="otherCogState">
+            <select class="form-control" id="cogSelector">
+                <option value="Bored">Bored</option>
+                <option value="Concentrating">Concentrating</option>
+                <option value="Confused">Confused</option>
+                <option value="Delighted">Delighted</option>
+                <option value="Distracted">Distracted</option>
+                <option value="Engaged">Engaged</option>
+                <option value="Frustrated">Frustrated</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Suprised">Suprised</option>
+                <option value="otherStatetText">Other</option>
+            </select>
+
+            <div class="form-group mt-2">
+                <textarea class="form-control d-none" id="otherStatetText" placeholder="other state" ></textarea>
             </div>
         </form>
 
@@ -182,7 +132,7 @@
               </button>
             </div>
             <div class="modal-body">
-                Participant ID and Course ID are required to continue
+                Observer name and Course ID are required to continue
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

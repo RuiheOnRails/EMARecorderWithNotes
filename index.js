@@ -1,122 +1,62 @@
-//for smooth scroll to work the same in all browser
 window.__forceSmoothScrollPolyfill__ = true
 
 var trackingData = [];
-var partID = "";
-var courseID = "";
+var observerName = "";
+var courseNumber = "";
+var classAct = "";
+var studentBeh = "";
+var cogState = "";
+var currentObserving = "";
 
-function addEventListenerToBtns(){
+var trackingState = {
+    classAct: "",
+    studentBeh:"",
+    cogState: ""
+}
 
-    //when other is selected focus the text box
-    document.querySelectorAll(".tagOther").forEach(el => {
-        el.addEventListener("click", e => {
-            document.getElementById(el.value).focus();
-        })
-    });
+var idToOtherMap = {
+    classActSelector: "otherClassActText",
+    studentActSelector: "otherBehText",
+    cogSelector: "otherStatetText"
+}
 
-    document.getElementById("btnSubmit").addEventListener("click", e => {
-        addToTrackingData(
-            getRadioOrOtherValue("classActivityRadios"),
-            getRadioOrOtherValue("studentBehaviorRadios"),
-            document.getElementById("notes").value,
-            getRadioOrOtherValue("cogAffStateRadios"),
-            getCurrentTimeInString());
-    
-        clearchecks("classActivityRadios");
-        clearchecks("studentBehaviorRadios");
-        clearchecks("cogAffStateRadios");
-        
-        document.getElementById("notes").value = "";
+registerSelectors("classActSelector", "classAct");
+registerSelectors("studentActSelector", "studentBeh");
+registerSelectors("cogSelector", "cogState");
 
-        document.getElementById("classActForm").scrollIntoView({behavior: 'smooth', block: 'start'});
-    });
-
-    document.getElementById("btnStop").addEventListener("click", e => {
+function registerSelectors(id, key){
+    document.getElementById(id).addEventListener("change", (e) => {
         e.preventDefault();
-        addToTrackingData("","","","",getCurrentTimeInString());
-    });
-
-    document.getElementById("btnStart").addEventListener("click", (e) =>{
-        e.preventDefault();
-        partID = document.getElementById("partID").value;
-        courseID = document.getElementById("courseID").value;
-
-        if(partID === "" || courseID === ""){
-            showModal();
+        let selectedOption = e.srcElement[e.srcElement.selectedIndex].value;
+        if(selectedOption.startsWith("other")){
+            let localtextArea = document.getElementById(selectedOption);
+            localtextArea.removeAttribute("disabled");
+            localtextArea.classList.remove("d-none");
+            trackingState[key] = localtextArea.value;
+            localtextArea.addEventListener("input", (e) => {
+                e.preventDefault();
+                trackingState[key] = localtextArea.value;
+            })
         }else{
-            addToTrackingData("","","","",getCurrentTimeInString());
-            enableBtns();
-            enableFields();
-            lockRequiredForm();
-            document.getElementById("btnStart").setAttribute("disabled", true);
+            document.getElementById(idToOtherMap[id]).setAttribute("disabled", true);
+            document.getElementById(idToOtherMap[id]).classList.add("d-none");
+            trackingState[key] = selectedOption;
+        }
+    })
+}
+
+//continue with adding to trackingData and locking/enabling form
+
+function showModal(){
+    $("#requiredModal").modal('show');
+
+    $("#requiredModal").on('hidden.bs.modal', function () {
+        if(observerName === ""){
+            document.getElementById("partID").focus();
+        }else{
+            document.getElementById("courseID").focus();
         }
     });
-    
-    document.getElementById("btnDownload").addEventListener("click", (e) =>{
-        e.preventDefault();
-        convertArrayOfObjectsToCSV(trackingData);
-        downloadCSV({"filename": partID});
-    });
-}
-
-function clearchecks(radGroupName){
-    document.getElementsByName(radGroupName).forEach(el => {
-        el.checked = false;
-    });
-
-    //set first one to be checked by default
-    document.getElementsByName(radGroupName)[0].checked = true;
-}
-
-function getRadioOrOtherValue(radGroupName){
-    let retValue = "";
-    document.getElementsByName(radGroupName).forEach(el => {
-        if(el.checked == true){
-            if(el.getAttribute("tag") === "other"){
-                retValue = document.getElementById(el.value).value;
-                document.getElementById(el.value).value = "";
-            }else{
-                retValue = el.value;
-            }
-        }
-    });
-
-    return retValue;
-}
-//true or false does not matter in this function, to re-enable button, attribute disabled must be removed
-function disableBtns() {
-    document.getElementById("btnStop").setAttribute("disabled", true);
-    document.getElementById("btnDownload").setAttribute("disabled", true);
-}
-
-function disableFields(){
-    // document.querySelectorAll("fieldset").forEach(ele => ele.setAttribute("disabled", true));
-    document.getElementById("classActForm").setAttribute("disabled", true);
-    document.getElementById("studentForm").setAttribute("disabled", true);
-    document.getElementById("cogStateForm").setAttribute("disabled", true);
-    document.getElementById("notes").setAttribute("disabled", true);
-    document.getElementById("btnSubmit").setAttribute("disabled", true);
-}
-
-function enableFields(){
-    document.querySelectorAll("fieldset").forEach(ele => ele.removeAttribute("disabled"));
-    document.getElementById("notes").removeAttribute("disabled");
-    document.getElementById("btnSubmit").removeAttribute("disabled");
-}
-
-function enableBtns() {
-    document.getElementById("btnStop").removeAttribute("disabled");
-    document.getElementById("btnDownload").removeAttribute("disabled");
-}
-
-function lockRequiredForm(){
-    document.getElementById("partID").setAttribute("readonly", true);
-    document.getElementById("courseID").setAttribute("readonly", true);
-}
-
-function enableRequiredForm(){
-    document.getElementById("partID").removeAttribute("readonly");
-    document.getElementById("courseID").removeAttribute("readonly");
 }
 
 function convertArrayOfObjectsToCSV(args) {  
@@ -173,43 +113,3 @@ function downloadCSV(args) {
 function getCurrentTimeInString(){
     return (new Date).toLocaleString();
 }
-
-function addToTrackingData(classActivity, studentBehavior, otherObs, cognState, time){
-    let obj = {
-        PartID: "",
-        CourseID: "",
-        "Class Activity": "",
-        "Student's Specific Behavior": "", 
-        "Other Observation" : "",
-        "Cognitive-affective state": "",
-        Date: "",
-        TimeStamp: "",
-    };
-    obj.PartID = partID.replace(/,/g, " ");
-    obj.CourseID = courseID.replace(/,/g, " ");
-    obj["Class Activity"] = classActivity.replace(/,/g, " ");
-    obj["Student's Specific Behavior"] = studentBehavior.replace(/,/g, " ");
-    obj["Cognitive-affective state"] = cognState.replace(/,/g, " ");
-    let datetimearray = time.split(",");
-    obj.Date = datetimearray[0];
-    obj.TimeStamp = datetimearray[1];
-    let txtAreaNotes = otherObs.replace(/,/g, " ");
-    obj["Other Observation"] = txtAreaNotes;
-    trackingData.push(obj);
-}
-
-function showModal(){
-    $("#requiredModal").modal('show');
-
-    $("#requiredModal").on('hidden.bs.modal', function () {
-        if(partID === ""){
-            document.getElementById("partID").focus();
-        }else{
-            document.getElementById("courseID").focus();
-        }
-    });
-}
-
-addEventListenerToBtns();
-disableBtns();
-disableFields();
