@@ -2,16 +2,17 @@ window.__forceSmoothScrollPolyfill__ = true
 
 var trackingData = [];
 var observerName = "";
-var courseNumber = "";
+var courseID = "";
 var classAct = "";
 var studentBeh = "";
 var cogState = "";
 var currentObserving = "";
 
 var trackingState = {
-    classAct: "",
-    studentBeh:"",
-    cogState: ""
+    classAct: "Discussion",
+    studentBeh:"Checking phone",
+    cogState: "Bored",
+    currentTime: "",
 }
 
 var idToOtherMap = {
@@ -20,9 +21,61 @@ var idToOtherMap = {
     cogSelector: "otherStatetText"
 }
 
-registerSelectors("classActSelector", "classAct");
-registerSelectors("studentActSelector", "studentBeh");
-registerSelectors("cogSelector", "cogState");
+function registerButton(){
+    document.getElementById("btnStart").addEventListener("click", (e) =>{
+        e.preventDefault();
+        observerName = document.getElementById("observerName").value;
+        courseID = document.getElementById("courseID").value;
+
+        if(observerName === "" || courseID === ""){
+            showModal();
+        }else{
+            addToTrackingData("START", "START", "START", getCurrentTimeInString());
+            enableBtns();
+            enableSelectors();
+            lockRequiredForm();
+            document.getElementById("btnStart").setAttribute("disabled", true);
+        }
+    });
+
+    document.getElementById("btnSubmit").addEventListener("click", e => {
+        addToTrackingData(
+            trackingState.classAct,
+            trackingState.studentBeh,
+            trackingState.cogState,
+            trackingState.currentTime
+        );
+
+        document.querySelectorAll("textarea").forEach(el => {
+            console.log(el.value);
+            el.value = "";
+        });
+        
+        trackingState.classAct = "";
+        trackingState.cogState = "";
+        trackingState.studentBeh = "";
+        trackingState.currentTime = "";
+        document.getElementById("classActForm").scrollIntoView({behavior: 'smooth', block: 'start'});
+
+        disbaleSubmit();
+    });
+
+    document.getElementById("btnStop").addEventListener("click", e => {
+        e.preventDefault();
+        addToTrackingData("STOP","STOP","STOP",getCurrentTimeInString());
+    });
+
+    document.getElementById("btnDownload").addEventListener("click", (e) =>{
+        e.preventDefault();
+        // convertArrayOfObjectsToCSV(trackingData);
+        downloadCSV({"filename": observerName});
+    });
+
+    document.getElementById("btnRecTime").addEventListener("click", (e) => {
+        trackingState.currentTime = getCurrentTimeInString();
+        enableSubmit();
+    })
+}
 
 function registerSelectors(id, key){
     document.getElementById(id).addEventListener("change", (e) => {
@@ -45,7 +98,39 @@ function registerSelectors(id, key){
     })
 }
 
-//continue with adding to trackingData and locking/enabling form
+function addToTrackingData(classActivity, studentBehavior, cognState, time){
+    let obj = {
+        Observer: "",
+        CourseID: "",
+        Participant: "",
+        "Class Activity": "",
+        "Student's Specific Behavior": "", 
+        "Cognitive-affective state": "",
+        Date: "",
+        TimeStamp: "",
+    };
+    obj.Observer = observerName.replace(/,/g, " ");
+    obj.CourseID = courseID.replace(/,/g, " ");
+    obj.Participant = getRadioValue("obserRadios");
+    obj["Class Activity"] = classActivity.replace(/,/g, " ");
+    obj["Student's Specific Behavior"] = studentBehavior.replace(/,/g, " ");
+    obj["Cognitive-affective state"] = cognState.replace(/,/g, " ");
+    let datetimearray = time.split(",");
+    obj.Date = datetimearray[0];
+    obj.TimeStamp = datetimearray[1];
+    trackingData.push(obj);
+}
+
+function getRadioValue(radGroupName){
+    let retValue = "";
+    document.getElementsByName(radGroupName).forEach(el => {
+        if(el.checked == true){
+            retValue = el.value;
+        }
+    });
+
+    return retValue;
+}
 
 function showModal(){
     $("#requiredModal").modal('show');
@@ -113,3 +198,57 @@ function downloadCSV(args) {
 function getCurrentTimeInString(){
     return (new Date).toLocaleString();
 }
+
+//true or false does not matter in this function, to re-enable button, attribute disabled must be removed
+function disableBtns() {
+    document.getElementById("btnStop").setAttribute("disabled", true);
+    document.getElementById("btnDownload").setAttribute("disabled", true);
+    document.getElementById("btnSubmit").setAttribute("disabled", true);
+    document.getElementById("btnRecTime").setAttribute("disabled", true);
+}
+
+function disableSelectors(){
+    // document.querySelectorAll("fieldset").forEach(ele => ele.setAttribute("disabled", true));
+    document.getElementById("classActForm").setAttribute("disabled", true);
+    document.getElementById("studentForm").setAttribute("disabled", true);
+    document.getElementById("cogStateForm").setAttribute("disabled", true);
+}
+
+function enableSelectors(){
+    // document.querySelectorAll("fieldset").forEach(ele => ele.setAttribute("disabled", true));
+    document.getElementById("classActForm").removeAttribute("disabled");
+    document.getElementById("studentForm").removeAttribute("disabled");
+    document.getElementById("cogStateForm").removeAttribute("disabled");
+}
+
+function enableBtns() {
+    document.getElementById("btnStop").removeAttribute("disabled");
+    document.getElementById("btnDownload").removeAttribute("disabled");
+    document.getElementById("btnRecTime").removeAttribute("disabled");
+}
+
+function lockRequiredForm(){
+    document.getElementById("observerName").setAttribute("readonly", true);
+    document.getElementById("courseID").setAttribute("readonly", true);
+}
+
+function enableRequiredForm(){
+    document.getElementById("observerName").removeAttribute("readonly");
+    document.getElementById("courseID").removeAttribute("readonly");
+}
+
+function disbaleSubmit() {
+    document.getElementById("btnSubmit").setAttribute("disabled", true);
+}
+
+function enableSubmit(){
+    document.getElementById("btnSubmit").removeAttribute("disabled");
+}
+
+registerSelectors("classActSelector", "classAct");
+registerSelectors("studentActSelector", "studentBeh");
+registerSelectors("cogSelector", "cogState");
+
+disableBtns();
+disableSelectors();
+registerButton();

@@ -174,29 +174,29 @@ function getCurrentTimeInString(){
     return (new Date).toLocaleString();
 }
 
-function addToTrackingData(classActivity, studentBehavior, otherObs, cognState, time){
-    let obj = {
-        PartID: "",
-        CourseID: "",
-        "Class Activity": "",
-        "Student's Specific Behavior": "", 
-        "Other Observation" : "",
-        "Cognitive-affective state": "",
-        Date: "",
-        TimeStamp: "",
-    };
-    obj.PartID = partID.replace(/,/g, " ");
-    obj.CourseID = courseID.replace(/,/g, " ");
-    obj["Class Activity"] = classActivity.replace(/,/g, " ");
-    obj["Student's Specific Behavior"] = studentBehavior.replace(/,/g, " ");
-    obj["Cognitive-affective state"] = cognState.replace(/,/g, " ");
-    let datetimearray = time.split(",");
-    obj.Date = datetimearray[0];
-    obj.TimeStamp = datetimearray[1];
-    let txtAreaNotes = otherObs.replace(/,/g, " ");
-    obj["Other Observation"] = txtAreaNotes;
-    trackingData.push(obj);
-}
+// function addToTrackingData(classActivity, studentBehavior, otherObs, cognState, time){
+//     let obj = {
+//         PartID: "",
+//         CourseID: "",
+//         "Class Activity": "",
+//         "Student's Specific Behavior": "", 
+//         "Other Observation" : "",
+//         "Cognitive-affective state": "",
+//         Date: "",
+//         TimeStamp: "",
+//     };
+//     obj.PartID = partID.replace(/,/g, " ");
+//     obj.CourseID = courseID.replace(/,/g, " ");
+//     obj["Class Activity"] = classActivity.replace(/,/g, " ");
+//     obj["Student's Specific Behavior"] = studentBehavior.replace(/,/g, " ");
+//     obj["Cognitive-affective state"] = cognState.replace(/,/g, " ");
+//     let datetimearray = time.split(",");
+//     obj.Date = datetimearray[0];
+//     obj.TimeStamp = datetimearray[1];
+//     let txtAreaNotes = otherObs.replace(/,/g, " ");
+//     obj["Other Observation"] = txtAreaNotes;
+//     trackingData.push(obj);
+// }
 
 function showModal(){
     $("#requiredModal").modal('show');
