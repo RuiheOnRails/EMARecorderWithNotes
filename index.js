@@ -10,7 +10,7 @@ var currentObserving = "";
 
 var trackingState = {
     classAct: "Discussion",
-    studentBeh:"Checking phone",
+    studentBeh:"Chatting with friends",
     cogState: "Bored",
     currentTime: "",
 }
