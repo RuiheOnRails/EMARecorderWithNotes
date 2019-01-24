@@ -21,6 +21,8 @@ var idToOtherMap = {
     cogSelector: "otherStatetText"
 }
 
+var selectorIds = ["classActSelector", "studentActSelector", "cogSelector"]
+
 function registerButton(){
     document.getElementById("btnStart").addEventListener("click", (e) =>{
         e.preventDefault();
@@ -30,7 +32,7 @@ function registerButton(){
         if(observerName === "" || courseID === ""){
             showModal();
         }else{
-            addToTrackingData("START", "START", "START", getCurrentTimeInString());
+            addToTrackingData("START", "START", "START", "START", getCurrentTimeInString());
             enableBtns();
             enableSelectors();
             lockRequiredForm();
@@ -39,30 +41,52 @@ function registerButton(){
     });
 
     document.getElementById("btnSubmit").addEventListener("click", e => {
-        addToTrackingData(
-            trackingState.classAct,
-            trackingState.studentBeh,
-            trackingState.cogState,
-            trackingState.currentTime
-        );
-
-        document.querySelectorAll("textarea").forEach(el => {
-            console.log(el.value);
-            el.value = "";
-        });
-        
-        trackingState.classAct = "";
-        trackingState.cogState = "";
-        trackingState.studentBeh = "";
-        trackingState.currentTime = "";
-        document.getElementById("classActForm").scrollIntoView({behavior: 'smooth', block: 'start'});
-
-        disbaleSubmit();
+        if(getCheckedValue("partcheckbox").length == 0){
+            showPartCheckModal();
+        }else{
+            getCheckedValue("partcheckbox").forEach(p => {
+                addToTrackingData(
+                    p,
+                    trackingState.classAct,
+                    trackingState.studentBeh,
+                    trackingState.cogState,
+                    trackingState.currentTime
+                );
+            })
+    
+            document.querySelectorAll("textarea").forEach(el => {
+                console.log(el.value);
+                el.value = "";
+            });
+            
+            resetSelectors();
+            // trackingState.classAct = "";
+            // trackingState.cogState = "";
+            // trackingState.studentBeh = "";
+            // trackingState.currentTime = "";
+            document.getElementById("classActForm").scrollIntoView({behavior: 'smooth', block: 'start'});
+    
+            disbaleSubmit();
+        }
     });
+
+    document.getElementById("btnCheckAll").addEventListener("click", (e) => {
+        e.preventDefault();
+        document.getElementsByName("partcheckbox").forEach(c => {
+            c.checked = true;
+        })
+    })
+
+    document.getElementById("btnClearCheck").addEventListener("click", (e) => {
+        e.preventDefault();
+        document.getElementsByName("partcheckbox").forEach(c => {
+            c.checked = false;
+        })
+    })
 
     document.getElementById("btnStop").addEventListener("click", e => {
         e.preventDefault();
-        addToTrackingData("STOP","STOP","STOP",getCurrentTimeInString());
+        addToTrackingData("STOP","STOP","STOP","STOP",getCurrentTimeInString());
     });
 
     document.getElementById("btnDownload").addEventListener("click", (e) =>{
@@ -98,7 +122,7 @@ function registerSelectors(id, key){
     })
 }
 
-function addToTrackingData(classActivity, studentBehavior, cognState, time){
+function addToTrackingData(partId, classActivity, studentBehavior, cognState, time){
     let obj = {
         Observer: "",
         CourseID: "",
@@ -111,7 +135,7 @@ function addToTrackingData(classActivity, studentBehavior, cognState, time){
     };
     obj.Observer = observerName.replace(/,/g, " ");
     obj.CourseID = courseID.replace(/,/g, " ");
-    obj.Participant = getRadioValue("obserRadios");
+    obj.Participant = partId;
     obj["Class Activity"] = classActivity.replace(/,/g, " ");
     obj["Student's Specific Behavior"] = studentBehavior.replace(/,/g, " ");
     obj["Cognitive-affective state"] = cognState.replace(/,/g, " ");
@@ -121,14 +145,13 @@ function addToTrackingData(classActivity, studentBehavior, cognState, time){
     trackingData.push(obj);
 }
 
-function getRadioValue(radGroupName){
-    let retValue = "";
+function getCheckedValue(radGroupName){
+    let retValue = [];
     document.getElementsByName(radGroupName).forEach(el => {
         if(el.checked == true){
-            retValue = el.value;
+            retValue.push(el.value);
         }
     });
-
     return retValue;
 }
 
@@ -142,6 +165,10 @@ function showModal(){
             document.getElementById("courseID").focus();
         }
     });
+}
+
+function showPartCheckModal(){
+    $("#requirePartCheck").modal('show');
 }
 
 function convertArrayOfObjectsToCSV(args) {  
@@ -243,6 +270,18 @@ function disbaleSubmit() {
 
 function enableSubmit(){
     document.getElementById("btnSubmit").removeAttribute("disabled");
+}
+
+function resetSelectors(){
+    selectorIds.forEach(id => {
+        document.getElementById(id).selectedIndex = 0
+        document.getElementById(id).dispatchEvent(new Event("change"))
+    });
+
+    document.getElementsByName("othertextarea").forEach((a) => {
+        a.classList.add("d-none");
+        a.setAttribute("disabled", true);
+    });
 }
 
 registerSelectors("classActSelector", "classAct");

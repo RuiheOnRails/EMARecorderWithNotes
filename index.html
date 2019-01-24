@@ -32,36 +32,30 @@
             <button id="btnDownload" type="button" class="btn btn-outline-info m-1">Download</button>
         </div>
 
+        <button type="button" class="btn btn-info btn-block mt-3" id="btnRecTime">Record Time</button>
+
         <form id='observingForm'>
             <legend>Observing</legend>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="obserRadios" id="radAll" value="All" checked>
-                <label class="form-check-label" for="radAll">
-                    All
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="obserRadios" id="radP1" value="P1" >
-                <label class="form-check-label" for="radP1">
-                    P1
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="obserRadios" id="radP2" value="P2">
-                <label class="form-check-label" for="radP2">
-                    P2
-                </label>
-            </div>
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="radio" name="obserRadios" id="radP3" value="P3">
-                <label class="form-check-label" for="radP3">
-                    P3
-                </label>
+            <div class="d-flex">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="partcheckbox" id="p1checkbox" value="P1">
+                    <label class="form-check-label" for="p1checkbox">P1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="partcheckbox" id="p2checkbox" value="P2">
+                    <label class="form-check-label" for="p2checkbox">P2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="partcheckbox" id="p3checkbox" value="P3">
+                    <label class="form-check-label" for="p3checkbox">P3</label>
+                </div>
+                <div id="checkBtns"class="d-flex justify-content-center flex-wrap">
+                    <button id="btnCheckAll" name="all" type="button" class="btn btn-outline-success m-1">all</button>
+                    <button id="btnClearCheck" name="clear" type="button" class="btn btn-outline-warning m-1">clear</button>
+                </div>
             </div>
         </form>
 
-        <button type="button" class="btn btn-secondary btn-block mt-3" id="btnRecTime">Record Time</button>
-        
         <form id="classActForm">
             <legend> Class activity</legend>
             <select class="form-control" id="classActSelector">             
@@ -74,7 +68,7 @@
             </select>
 
             <div class="form-group mt-2 ">
-                <textarea class="form-control d-none" id="otherClassActText" placeholder="other class activity" ></textarea>
+                <textarea class="form-control d-none" name="othertextarea" id="otherClassActText" placeholder="other class activity" ></textarea>
             </div>
         </form>
 
@@ -95,7 +89,7 @@
             </select>
 
             <div class="form-group mt-2">
-                <textarea class="form-control d-none" id="otherBehText" placeholder="other behavior" ></textarea>
+                <textarea class="form-control d-none" name="othertextarea" id="otherBehText" placeholder="other behavior" ></textarea>
             </div>
         </form>
 
@@ -115,7 +109,7 @@
             </select>
 
             <div class="form-group mt-2">
-                <textarea class="form-control d-none" id="otherStatetText" placeholder="other state" ></textarea>
+                <textarea class="form-control d-none" name="othertextarea" id="otherStatetText" placeholder="other state" ></textarea>
             </div>
         </form>
 
@@ -126,7 +120,7 @@
 
     </div>
 
-    <div class="modal fade" id="requiredModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal fade" id="requiredModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -137,6 +131,25 @@
             </div>
             <div class="modal-body">
                 Observer name and Course ID are required to continue
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="requirePartCheck" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">No Participant Checked</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                Please check at least 1 participant
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
