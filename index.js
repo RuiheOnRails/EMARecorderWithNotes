@@ -60,12 +60,11 @@ function registerButton(){
             });
             
             resetSelectors();
-            // trackingState.classAct = "";
-            // trackingState.cogState = "";
-            // trackingState.studentBeh = "";
-            // trackingState.currentTime = "";
+
             document.getElementById("classActForm").scrollIntoView({behavior: 'smooth', block: 'start'});
-    
+            document.getElementsByName("partcheckbox").forEach(c => {
+                c.checked = false;
+            });
             disbaleSubmit();
         }
     });
@@ -235,14 +234,12 @@ function disableBtns() {
 }
 
 function disableSelectors(){
-    // document.querySelectorAll("fieldset").forEach(ele => ele.setAttribute("disabled", true));
     document.getElementById("classActForm").setAttribute("disabled", true);
     document.getElementById("studentForm").setAttribute("disabled", true);
     document.getElementById("cogStateForm").setAttribute("disabled", true);
 }
 
 function enableSelectors(){
-    // document.querySelectorAll("fieldset").forEach(ele => ele.setAttribute("disabled", true));
     document.getElementById("classActForm").removeAttribute("disabled");
     document.getElementById("studentForm").removeAttribute("disabled");
     document.getElementById("cogStateForm").removeAttribute("disabled");
